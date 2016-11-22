@@ -39,6 +39,67 @@ remark()
 });
 ```
 
+## Syntax
+
+Inspired by [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref).
+
+### Image labels
+
+```markdown
+![Caption](file.ext){#fig:label}
+```
+
+### Equation labels
+
+**Not implemented**
+
+```markdown
+$$ math $$ {#eq:label}
+```
+
+### Table labels
+
+```markdown
+|  a  |  b  |  c  |
+|:---:|:---:|:---:|
+|  1  |  2  |  3  |
+
+: Caption {#tbl:label}
+```
+
+### Section labels
+
+```markdown
+# Section {#sec:section}
+```
+
+### Code Block labels
+
+**Not implemented**
+
+<pre>
+```{#lst:code .haskell caption="Listing caption"}
+main :: IO ()
+main = putStrLn "Hello World!"
+```
+</pre>
+
+### References
+
+```markdown
+[@fig:label1] or [@fig:label1;@fig:label2;...]
+```
+
+```markdown
+[@jones99] or [@jones99;@smith06;...]
+```
+
+### YAML
+
+#### Bibliography
+
+**Not implemented**
+
 ## Contribute
 
 PRs accepted.
