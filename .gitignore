@@ -1,0 +1,7 @@
+**/*
+!.gitignore
+!lib
+!LICENSE
+!README.md
+!index.js
+!package.json
