@@ -1,6 +1,6 @@
-**/*
+/*
 !.gitignore
-!lib
+!/lib
 !LICENSE
 !README.md
 !index.js
