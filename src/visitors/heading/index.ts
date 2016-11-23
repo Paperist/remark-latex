@@ -3,6 +3,7 @@ import crossReferenceLabel from '../crossReferenceLabel';
 import visit = require('unist-util-visit');
 
 const typeList = [
+  'chapter',
   'section',
   'subsection',
   'subsubsection',
