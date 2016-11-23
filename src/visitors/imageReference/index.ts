@@ -8,7 +8,7 @@ export default function linkReference(
   const def = this.definitions[identifier] || {};
 
   const bind = Object.assign({
-    href: def.link,
+    url: def.url,
     alt: def.title,
   }, node);
 

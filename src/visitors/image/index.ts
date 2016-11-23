@@ -20,7 +20,7 @@ export default function image(
   const results = [
     '\\begin{figure}[tb]',
     '\\begin{center}',
-    `\\includegraphics[${config}]{${node.src}}`,
+    `\\includegraphics[${config}]{${node.url}}`,
     `\\caption{${title.trim()}}`,
     ((label) ? label : ''),
     '\\end{center}',

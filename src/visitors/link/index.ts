@@ -5,6 +5,6 @@ export default function link(
   node: any,
 ) {
   const result =
-    `\\href{${node.href}}{${this.all(node).join('')}}`;
+    `\\href{${node.url}}{${this.all(node).join('')}}`;
   return result;
 }
