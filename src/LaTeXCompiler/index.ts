@@ -10,7 +10,16 @@ export default class LaTeXCompiler {
   constructor(
     public file: any,
     public options: any,
-  ) {}
+  ) {
+    if (file.extension) {
+      file.move({
+        extension: 'tex',
+      });
+    }
+    if (file.extname) {
+      file.extname = '.tex';
+    }
+  }
 
   compile(
     node: any,
