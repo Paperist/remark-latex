@@ -24,7 +24,7 @@ export default class LaTeXCompiler {
     }
 
     this.options.templatesDir =
-      this.options.templatesDir || path.join(__dirname, '../templates');
+      this.options.templatesDir || path.resolve(__dirname, '../templates');
   }
 
   compile(
@@ -44,7 +44,8 @@ export default class LaTeXCompiler {
     }
 
     try {
-      const template = fs.readFileSync(this.options.baseTemplateFile, 'utf8');
+      const templatePath = path.resolve(this.file.dirname, this.options.baseTemplateFile);
+      const template = fs.readFileSync(templatePath, 'utf8');
       const data =
         Object.assign({}, this.options.documentInfo || {}, { body: compiled });
       return ejs.render(template, data, <any> { escape: (text: string) => text });
@@ -87,11 +88,11 @@ export default class LaTeXCompiler {
 
     let template: string;
     try {
-      const templatePath = path.join(this.options.templatesDir, `./${type}.ejs`);
+      const templatePath = path.resolve(this.options.templatesDir, `./${type}.ejs`);
       template = fs.readFileSync(templatePath, 'utf8');
     } catch (_e) {
       try {
-        const templatePath = path.join(__dirname, '../templates', `./${type}.ejs`);
+        const templatePath = path.resolve(__dirname, '../templates', `./${type}.ejs`);
         template = fs.readFileSync(templatePath, 'utf8');
       } catch (_e) {
         console.error(_e.message || _e);
