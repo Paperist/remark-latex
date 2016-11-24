@@ -4,10 +4,12 @@
   "version": "0.0.0",
   "dependencies": {
     "ejs": "^2.5.2",
+    "js-yaml": "^3.7.0",
     "unist-util-visit": "^1.1.1"
   },
   "devDependencies": {
     "@types/ejs": "^2.3.33",
+    "@types/js-yaml": "^3.5.28",
     "@types/node": "^6.0.48",
     "cpx": "^1.5.0",
     "npm-run-all": "^3.1.1",
@@ -18,8 +20,8 @@
   "main": "index.js",
   "scripts": {
     "build": "npm-run-all clean -p build:*",
-    "build:ts": "tsc",
     "build:cp": "cpx 'src/**/!(*.ts)' lib",
+    "build:ts": "tsc",
     "clean": "rimraf lib/*",
     "commit": "bash ./commit.sh"
   }
