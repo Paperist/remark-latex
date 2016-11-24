@@ -1,15 +1,18 @@
-import visitors from '../visitors';
+import * as path from 'path';
+import * as fs from 'fs';
+import * as ejs from 'ejs';
+import converters, { Converters } from '../converters';
 import visit = require('unist-util-visit');
 
 export default class LaTeXCompiler {
 
   public footnotes: any[] = [];
   public definitions: any = {};
-  public visitors = visitors;
+  public converters: Converters = converters;
 
   constructor(
     public file: any,
-    public options: any,
+    public options: any = {},
   ) {
     if (file.extension) {
       file.move({
@@ -19,6 +22,9 @@ export default class LaTeXCompiler {
     if (file.extname) {
       file.extname = '.tex';
     }
+
+    this.options.templatesDir =
+      this.options.templatesDir || path.join(__dirname, '../templates');
   }
 
   compile(
@@ -38,17 +44,50 @@ export default class LaTeXCompiler {
   visit(
     node: any,
     parent: any,
+    idx: number = 0,
   ) {
     const type: string = (node) ? node.type : '';
-    const fnName =
-      (typeof (<any> this.visitors)[type] === 'function') ? type : 'unknown';
-
-    const fn: (...args: any[]) => string = (<any> this.visitors)[fnName];
-
     if (!type) {
       this.file.fail(`Expected node \`${node}\``);
     }
-    return <string> fn.call(this, node, parent);
+
+    let cloneNode = Object.assign({}, node, {
+      index: idx,
+      isFirst: (idx === 0),
+      isLast: (parent) ? (idx === parent.children.length - 1) : true,
+    });
+
+    if (typeof this.converters[type] === 'function') {
+      cloneNode = this.converters[type].call(this, cloneNode, parent);
+    }
+
+    return this.convert(cloneNode);
+  }
+
+  convert(
+    node: any,
+  ) {
+    const type: string = (node) ? node.type : '';
+    if (!type) {
+      return '';
+    }
+
+    let template: string;
+    try {
+      const templatePath = path.join(this.options.templatesDir, `./${type}.ejs`);
+      template = fs.readFileSync(templatePath, 'utf8');
+    } catch (_e) {
+      try {
+        const templatePath = path.join(__dirname, '../templates', `./${type}.ejs`);
+        template = fs.readFileSync(templatePath, 'utf8');
+      } catch (_e) {
+        console.error(_e.message || _e);
+        return '';
+      }
+    }
+
+    const rendered = ejs.render(template, node, <any> { escape: (text: string) => text });
+    return rendered.replace(/\n$/, '');
   }
 
   all(
@@ -60,7 +99,7 @@ export default class LaTeXCompiler {
     let prev: any;
 
     for (let idx = 0; idx < length; idx++) {
-      let value = this.visit(children[idx], parent) || '';
+      let value = this.visit(children[idx], parent, idx) || '';
 
       if (prev && prev.type === 'break') {
         value = value.replace(/^\s*/g, '');
@@ -85,10 +124,9 @@ export default class LaTeXCompiler {
 
     for (let idx = 0; idx < length; idx++) {
       const def = definitions[idx];
-      const identifier = def.identifier;
-      const content = this.all(def).join('');
-
-      results.push(`\\footnotetext[${identifier}]{${content}}`);
+      def.identifier = idx + 1;
+      def.value = this.all(def).join('');
+      results.push(this.convert(def));
     }
 
     return results.join('\n');
