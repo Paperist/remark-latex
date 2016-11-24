@@ -38,7 +38,20 @@ export default class LaTeXCompiler {
       this.footnotes.push(def);
     });
 
-    return this.visit(node, null) + '\n' + this.generateFootnotes();
+    const compiled = this.visit(node, null) + '\n' + this.generateFootnotes();
+    if (!this.options.baseTemplateFile) {
+      return compiled;
+    }
+
+    try {
+      const template = fs.readFileSync(this.options.baseTemplateFile, 'utf8');
+      const data =
+        Object.assign({}, this.options.documentInfo || {}, { body: compiled });
+      return ejs.render(template, data, <any> { escape: (text: string) => text });
+    } catch (_e) {
+      console.error(_e.message || _e);
+      return compiled;
+    }
   }
 
   visit(
