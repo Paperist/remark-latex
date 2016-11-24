@@ -1,43 +1,14 @@
+import { Converters } from '../converters';
 export default class LaTeXCompiler {
     file: any;
     options: any;
     footnotes: any[];
     definitions: any;
-    visitors: {
-        unknown: (this: LaTeXCompiler, node: any) => string;
-        ignore: () => string;
-        yaml: () => string;
-        definition: () => string;
-        html: () => string;
-        root: (this: LaTeXCompiler, node: any) => string;
-        text: (node: any) => string;
-        heading: (this: LaTeXCompiler, node: any) => string;
-        paragraph: (this: LaTeXCompiler, node: any) => string;
-        blockquote: (this: LaTeXCompiler, node: any) => string;
-        list: (this: LaTeXCompiler, node: any) => string;
-        listItem: (this: LaTeXCompiler, node: any, parent: any) => string;
-        inlineCode: (this: LaTeXCompiler, node: any) => string;
-        code: (this: LaTeXCompiler, node: any) => string;
-        thematicBreak: () => string;
-        strong: (this: LaTeXCompiler, node: any) => string;
-        emphasis: (this: LaTeXCompiler, node: any) => string;
-        break: () => string;
-        delete: (this: LaTeXCompiler, node: any) => string;
-        link: (this: LaTeXCompiler, node: any) => string;
-        linkReference: (this: LaTeXCompiler, node: any) => any;
-        image: (this: LaTeXCompiler, node: any, parent: any) => string;
-        imageReference: (this: LaTeXCompiler, node: any) => any;
-        footnote: (this: LaTeXCompiler, node: any) => any;
-        footnoteReference: (node: any) => string;
-        table: (this: LaTeXCompiler, node: any, parent: any) => string;
-        tableCell: (this: LaTeXCompiler, node: any) => string;
-        tableCaption: () => string;
-        crossReferenceLabel: () => string;
-        crossReference: (node: any) => string;
-    };
-    constructor(file: any, options: any);
+    converters: Converters;
+    constructor(file: any, options?: any);
     compile(node: any): string;
-    visit(node: any, parent: any): string;
+    visit(node: any, parent: any, idx?: number): string;
+    convert(node: any): string;
     all(parent: any): string[];
     generateFootnotes(): string;
 }

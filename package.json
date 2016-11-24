@@ -3,16 +3,24 @@
   "description": "wooorm/remark plugin for latex",
   "version": "0.0.0",
   "dependencies": {
+    "ejs": "^2.5.2",
     "unist-util-visit": "^1.1.1"
   },
   "devDependencies": {
+    "@types/ejs": "^2.3.33",
     "@types/node": "^6.0.48",
+    "cpx": "^1.5.0",
+    "npm-run-all": "^3.1.1",
+    "rimraf": "^2.5.4",
     "typescript": "^2.0.10"
   },
   "license": "MIT",
   "main": "index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "npm-run-all clean -p build:*",
+    "build:ts": "tsc",
+    "build:cp": "cpx 'src/**/!(*.ts)' lib",
+    "clean": "rimraf lib/*",
     "commit": "bash ./commit.sh"
   }
 }
