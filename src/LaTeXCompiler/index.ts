@@ -1,6 +1,7 @@
 import * as path from 'path';
 import * as fs from 'fs';
 import * as ejs from 'ejs';
+import * as jsYAML from 'js-yaml';
 import converters, { Converters } from '../converters';
 import visit = require('unist-util-visit');
 
@@ -30,6 +31,15 @@ export default class LaTeXCompiler {
   compile(
     node: any,
   ) {
+    visit(node, 'yaml', (yamlNode: any) => {
+      try {
+        const opts = jsYAML.safeLoad(yamlNode.value);
+        this.options = Object.assign(this.options, opts.latex || {});
+      } catch (_e) {
+        this.file.fail(_e.message || _e, yamlNode);
+      }
+    });
+
     visit(node, 'definition', (def: any) => {
       const id = def.identifier.toUpperCase();
       this.definitions[id] = def;
@@ -50,7 +60,7 @@ export default class LaTeXCompiler {
         Object.assign({}, this.options.documentInfo || {}, { body: compiled });
       return ejs.render(template, data, <any> { escape: (text: string) => text });
     } catch (_e) {
-      console.error(_e.message || _e);
+      this.file.fail(_e.message || _e, node);
       return compiled;
     }
   }
@@ -95,7 +105,7 @@ export default class LaTeXCompiler {
         const templatePath = path.resolve(__dirname, '../templates', `./${type}.ejs`);
         template = fs.readFileSync(templatePath, 'utf8');
       } catch (_e) {
-        console.error(_e.message || _e);
+        this.file.fail(_e.message || _e, node);
         return '';
       }
     }
