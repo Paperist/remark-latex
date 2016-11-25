@@ -12,6 +12,7 @@ import footnote from './footnote';
 import table from './table';
 import crossReference from './crossReference';
 import footnoteReference from './footnoteReference';
+import blockMathjax from './blockMathjax';
 
 export interface Converters {
   [key: string]: (...args: any[]) => any,
@@ -26,6 +27,7 @@ export default <Converters> {
   footnote,
   crossReference,
   footnoteReference,
+  blockMathjax,
   yaml: ignore,
   html: ignore,
   definition: ignore,
