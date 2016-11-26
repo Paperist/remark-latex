@@ -1,5 +1,5 @@
 {
-  "name": "remark-latex",
+  "name": "@paperist/remark-latex",
   "description": "wooorm/remark plugin for latex",
   "version": "0.0.0",
   "dependencies": {
@@ -16,6 +16,19 @@
     "rimraf": "^2.5.4",
     "typescript": "^2.0.10"
   },
+  "files": [
+    "package.json",
+    "README",
+    "LICENSE",
+    "lib",
+    "index.js"
+  ],
+  "keywords": [
+    "latex",
+    "markdown",
+    "remark",
+    "tex"
+  ],
   "license": "MIT",
   "main": "index.js",
   "scripts": {
