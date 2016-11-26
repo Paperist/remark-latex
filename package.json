@@ -22,7 +22,6 @@
     "build": "npm-run-all clean -p build:*",
     "build:cp": "cpx 'src/**/!(*.ts)' lib",
     "build:ts": "tsc",
-    "clean": "rimraf lib/*",
-    "commit": "bash ./commit.sh"
+    "clean": "rimraf lib/*"
   }
 }
