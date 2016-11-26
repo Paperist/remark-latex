@@ -1,0 +1,26 @@
+general:
+  branches:
+    ignore:
+      - build
+machine:
+  node:
+    version: 6
+  post:
+    - npm install -g npm
+  timezone: Asia/Tokyo
+dependencies:
+  pre:
+    - npm config set progress false
+    - npm config set spin false
+    - npm install -d
+  override:
+    - npm run build
+test:
+  override:
+    - npm test
+deployment:
+  production:
+    tag: /v\d+(\.\d+)*/
+    commands:
+      - echo -e "$NPM_USER\n$NPM_PASS\n$NPM_EMAIL" | npm login
+      - npm publish --access=public
