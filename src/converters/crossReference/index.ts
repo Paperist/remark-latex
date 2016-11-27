@@ -11,7 +11,7 @@ export default function crossReference(
       .map((ref) => ref.replace(/^@/, ''));
 
   for (const id of ids) {
-    if (id.match(/^(?:fig|tbl|sec):/)) {
+    if (id.match(/^(?:fig|tbl|sec|eq|lst):/)) {
       refs.push(id);
     } else {
       cites.push(id);
