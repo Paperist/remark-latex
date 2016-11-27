@@ -19,7 +19,9 @@ export default function image(
     Object.assign(config, nextNode.options || {});
   }
 
-  node.config = qs.stringify(config, ',', '=');
+  node.config = qs.stringify(config, ',', '=', {
+    encodeURIComponent: (c: string) => c,
+  });
 
   return node;
 }
