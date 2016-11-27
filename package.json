@@ -12,6 +12,7 @@
     "@types/js-yaml": "^3.5.28",
     "@types/node": "^6.0.48",
     "cpx": "^1.5.0",
+    "greenkeeper-postpublish": "^1.0.1",
     "npm-run-all": "^3.1.1",
     "rimraf": "^2.5.4",
     "typescript": "^2.0.10"
@@ -35,6 +36,7 @@
     "build": "npm-run-all clean -p build:*",
     "build:cp": "cpx 'src/**/!(*.ts)' lib",
     "build:ts": "tsc",
-    "clean": "rimraf lib/*"
+    "clean": "rimraf lib/*",
+    "postpublish": "greenkeeper-postpublish"
   }
 }
