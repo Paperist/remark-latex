@@ -26,6 +26,9 @@ export default class LaTeXCompiler {
 
     this.options.templatesDir =
       this.options.templatesDir || path.resolve(__dirname, '../templates');
+    this.options.imageConfigs = {
+      keepaspectratio: true,
+    };
   }
 
   compile(
