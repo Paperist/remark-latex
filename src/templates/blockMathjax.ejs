@@ -6,9 +6,8 @@
 } %>
 <%= mathjax %>
 <% if (label) {
-    -%>\end{equation}<%
+    -%><%= label %>\end{equation}<%
 } else {
     -%>\end{displaymath}<%
 } -%>
-<%= label %>
 <%# Line Break %>
