@@ -2,6 +2,7 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as ejs from 'ejs';
 import * as jsYAML from 'js-yaml';
+import * as _ from 'lodash';
 import converters, { Converters } from '../converters';
 import visit = require('unist-util-visit');
 
@@ -10,10 +11,11 @@ export default class LaTeXCompiler {
   public footnotes: any[] = [];
   public definitions: any = {};
   public converters: Converters = converters;
+  public options: any;
 
   constructor(
     public file: any,
-    public options: any = {},
+    options: any = {},
   ) {
     if (file.extension) {
       file.move({
@@ -24,6 +26,7 @@ export default class LaTeXCompiler {
       file.extname = '.tex';
     }
 
+    this.options = _.cloneDeep(options);
     this.options.templatesDir =
       this.options.templatesDir || path.resolve(__dirname, '../templates');
     this.options.imageConfigs = Object.assign(
@@ -39,7 +42,7 @@ export default class LaTeXCompiler {
     visit(node, 'yaml', (yamlNode: any) => {
       try {
         const opts = jsYAML.safeLoad(yamlNode.value);
-        this.options = Object.assign(this.options, opts.latex || {});
+        this.options = _.defaultsDeep(this.options, opts.latex || {});
       } catch (_e) {
         this.file.fail(_e.message || _e, yamlNode);
       }
