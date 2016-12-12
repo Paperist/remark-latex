@@ -1,7 +1,7 @@
 {
   "name": "@paperist/remark-latex",
   "description": "wooorm/remark plugin for latex",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "dependencies": {
     "ejs": "^2.5.2",
     "js-yaml": "^3.7.0",
