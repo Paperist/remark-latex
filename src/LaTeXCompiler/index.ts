@@ -42,7 +42,7 @@ export default class LaTeXCompiler {
     visit(node, 'yaml', (yamlNode: any) => {
       try {
         const opts = jsYAML.safeLoad(yamlNode.value);
-        this.options = _.defaultsDeep(this.options, opts.latex || {});
+        this.options = Object.assign(this.options, opts.latex || {});
       } catch (_e) {
         this.file.fail(_e.message || _e, yamlNode);
       }
