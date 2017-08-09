@@ -11,7 +11,8 @@
     "build": "npm-run-all clean -p build:*",
     "build:cp": "cpx \"src/**/!(*.ts)\" lib",
     "build:ts": "tsc",
-    "clean": "rimraf lib/*"
+    "clean": "rimraf lib/*",
+    "precommit": "lint-staged"
   },
   "dependencies": {
     "@paperist/remark-crossref": "^1.0.3",
@@ -32,6 +33,7 @@
     "@types/node": "^8.0.19",
     "cpx": "^1.5.0",
     "husky": "^0.14.3",
+    "lint-staged": "^4.0.3",
     "npm-run-all": "^4.0.2",
     "prettier-package-json": "^1.4.0",
     "remark": "^8.0.0",
