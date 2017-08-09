@@ -1,3 +1,4 @@
+import { UNIST } from 'unist';
 import LaTeXCompiler from '../LaTeXCompiler';
 
 import join from './join';
@@ -12,14 +13,20 @@ import footnote from './footnote';
 import table from './table';
 import crossReference from './crossReference';
 import footnoteReference from './footnoteReference';
-import blockMathjax from './blockMathjax';
+import math from './math';
+
+const raw = (node: UNIST.Node) => node;
 
 export interface Converters {
-  [key: string]: (...args: any[]) => any,
+  [key: string]: (
+    this: LaTeXCompiler,
+    node: UNIST.Node,
+    parent?: UNIST.Parent
+  ) => UNIST.Node;
 }
 
 export { LaTeXCompiler };
-export default <Converters> {
+export default {
   ignore,
   image,
   table,
@@ -27,12 +34,11 @@ export default <Converters> {
   footnote,
   crossReference,
   footnoteReference,
-  blockMathjax,
+  math,
   yaml: ignore,
   html: ignore,
   definition: ignore,
   tableCaption: ignore,
-  crossReferenceLabel: ignore,
   footnoteDefinition: ignore,
   delete: join,
   strong: join,
@@ -45,9 +51,10 @@ export default <Converters> {
   list: joinWithLineBreak,
   listItem: joinWithLineBreak,
   tableRow: joinWithLineBreak,
-  code: escape,
-  inlineCode: escape,
+  code: raw,
+  crossReferenceLabel: raw,
   text: escape,
+  inlineCode: escape,
   linkReference: reference,
   imageReference: reference,
-};
+} as Converters;

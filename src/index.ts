@@ -1,7 +1,17 @@
-import LaTeXCompiler from './LaTeXCompiler';
+import FrontMatterPlugin = require('remark-frontmatter');
+import MathPlugin = require('@paperist/remark-math');
+import CrossrefPlugin = require('@paperist/remark-crossref');
+import TableCaptionPlugin = require('@paperist/remark-table-caption');
+import LaTeXPlugin from './attacher';
 
-export default function attacher(remark: any) {
-  remark.Compiler = LaTeXCompiler;
-}
+export const settings = {
+  footnotes: true,
+};
 
-Object.assign(attacher, { Compiler: LaTeXCompiler });
+export const plugins: any = [
+  FrontMatterPlugin,
+  MathPlugin,
+  CrossrefPlugin,
+  TableCaptionPlugin,
+  LaTeXPlugin,
+];

@@ -1,44 +1,55 @@
 {
   "name": "@paperist/remark-latex",
   "description": "wooorm/remark plugin for latex",
+  "license": "MIT",
   "version": "0.0.7",
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "build": "npm-run-all clean -p build:*",
+    "build:cp": "cpx \"src/**/!(*.ts)\" lib",
+    "build:ts": "tsc",
+    "clean": "rimraf lib/*"
+  },
   "dependencies": {
-    "ejs": "^2.5.2",
-    "js-yaml": "^3.7.0",
-    "lodash": "^4.17.2",
-    "unist-util-visit": "^1.1.1"
+    "@paperist/remark-crossref": "^1.0.3",
+    "@paperist/remark-math": "^1.0.3",
+    "@paperist/remark-table-caption": "^1.0.1",
+    "ejs": "^2.5.7",
+    "find-up": "^2.1.0",
+    "js-yaml": "^3.9.1",
+    "lodash": "^4.17.4",
+    "remark-frontmatter": "^1.1.0",
+    "unist-util-visit": "^1.1.3"
   },
   "devDependencies": {
+    "@paperist/types-remark": "^0.1.3",
     "@types/ejs": "^2.3.33",
-    "@types/js-yaml": "^3.5.28",
-    "@types/lodash": "^4.14.43",
-    "@types/node": "^6.0.48",
+    "@types/js-yaml": "^3.9.0",
+    "@types/lodash": "^4.14.71",
+    "@types/node": "^8.0.19",
     "cpx": "^1.5.0",
-    "greenkeeper-postpublish": "^1.0.1",
-    "npm-run-all": "^4.0.0",
-    "rimraf": "^2.5.4",
-    "typescript": "^2.0.10"
+    "husky": "^0.14.3",
+    "npm-run-all": "^4.0.2",
+    "prettier-package-json": "^1.4.0",
+    "remark": "^8.0.0",
+    "remark-cli": "^4.0.0",
+    "rimraf": "^2.6.1",
+    "typescript": "^2.4.2"
   },
-  "files": [
-    "package.json",
-    "README",
-    "LICENSE",
-    "lib",
-    "index.js"
-  ],
   "keywords": [
     "latex",
     "markdown",
     "remark",
     "tex"
   ],
-  "license": "MIT",
-  "main": "index.js",
-  "scripts": {
-    "build": "npm-run-all clean -p build:*",
-    "build:cp": "cpx 'src/**/!(*.ts)' lib",
-    "build:ts": "tsc",
-    "clean": "rimraf lib/*",
-    "postpublish": "greenkeeper-postpublish"
-  }
+  "lint-staged": {
+    "package.json": [
+      "prettier-package-json --write",
+      "git add"
+    ]
+  },
+  "types": "lib/index.d.ts"
 }

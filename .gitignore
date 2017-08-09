@@ -1,11 +1,13 @@
 
-# Created by https://www.gitignore.io/api/node,visualstudiocode
+# Created by https://www.gitignore.io/api/node
 
 ### Node ###
 # Logs
 logs
 *.log
 npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
 # Runtime data
 pids
@@ -25,6 +27,9 @@ coverage
 # Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
 .grunt
 
+# Bower dependency directory (https://bower.io/)
+bower_components
+
 # node-waf configuration
 .lock-wscript
 
@@ -32,8 +37,11 @@ coverage
 build/Release
 
 # Dependency directories
-node_modules
-jspm_packages
+node_modules/
+jspm_packages/
+
+# Typescript v1 declaration files
+typings/
 
 # Optional npm cache directory
 .npm
@@ -50,12 +58,9 @@ jspm_packages
 # Yarn Integrity file
 .yarn-integrity
 
-# Build
+# dotenv environment variables file
+.env
+
+
+# End of https://www.gitignore.io/api/node
 lib
-
-
-### VisualStudioCode ###
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json

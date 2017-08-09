@@ -1,16 +1,13 @@
 {
   "compilerOptions": {
+    "outDir": "lib",
+    "rootDir": "src",
     "module": "commonjs",
     "moduleResolution": "node",
-    "target": "es2015",
+    "target": "es2017",
     "declaration": true,
-    "lib": [
-      "dom",
-      "es2017"
-    ],
-    "types": [
-      "node"
-    ],
+    "lib": ["dom", "es2017"],
+    "types": ["node", "@paperist/types-remark"],
     "noImplicitAny": true,
     "strictNullChecks": true,
     "noFallthroughCasesInSwitch": true,
@@ -29,13 +26,8 @@
     "skipDefaultLibCheck": true,
     "skipLibCheck": false,
     "pretty": false,
-    "noEmitOnError": true,
-    "outDir": "lib/"
+    "noEmitOnError": true
   },
-  "include": [
-    "src/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["src/**/*.ts"],
+  "exclude": ["lib"]
 }

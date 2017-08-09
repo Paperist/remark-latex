@@ -1,27 +1,40 @@
-import LaTeXCompiler from '../../LaTeXCompiler';
+import { UNIST } from 'unist';
+import { MDAST } from 'mdast';
 import * as qs from 'querystring';
+import { cloneDeep, defaultsDeep } from 'lodash';
+
+import LaTeXCompiler, { ConvertOptionsNode } from '../../LaTeXCompiler';
 
 export default function image(
   this: LaTeXCompiler,
-  node: any,
-  parent: any,
+  node: MDAST.Image & ConvertOptionsNode,
+  parent: UNIST.Parent
 ) {
-  node.caption = node.title || node.alt;
-  node.label = node.label || '';
+  const caption = this.all(this.parse(node.title || node.alt || '')).join('');
+  let label = '';
 
-  const config = Object.assign({}, this.options.imageConfigs || {});
+  let options = cloneDeep(this.options.imageConfigs || {});
 
   const nextNodeIdx = node.index + 1;
   const nextNode = parent.children[nextNodeIdx];
 
   if (nextNode && nextNode.type === 'crossReferenceLabel') {
-    node.label += this.convert(nextNode);
-    Object.assign(config, nextNode.options || {});
+    const crNode = nextNode as MDAST.CrossReferenceLabel;
+    label += this.convert(nextNode);
+    options = defaultsDeep(crNode.options || {}, options);
+    Object.assign(crNode, { type: 'ignore' });
   }
 
-  node.config = qs.stringify(config, ',', '=', {
-    encodeURIComponent: (c: string) => c,
+  const configStr = qs.stringify(options, ',', '=', {
+    encodeURIComponent: (str: string) => str.replace(/,/g, '\\,'),
   });
 
-  return node;
+  return defaultsDeep(
+    {
+      label,
+      caption: caption.trim(),
+      config: configStr,
+    },
+    node
+  ) as UNIST.Node;
 }

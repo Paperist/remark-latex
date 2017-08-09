@@ -1,1 +1,1 @@
-\footnotemark[<%= identifier -%>]
+\footnote{<%= this.all(this.footnotes[`${parseInt(identifier, 10)  - 1}`]).join('').trim() -%>})

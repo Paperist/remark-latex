@@ -1,17 +1,23 @@
-import LaTeXCompiler from '../../LaTeXCompiler';
+import { UNIST } from 'unist';
+import { MDAST } from 'mdast';
 import visit = require('unist-util-visit');
+import { defaultsDeep } from 'lodash';
 
-export default function heading(
-  this: LaTeXCompiler,
-  node: any,
-) {
-  node.label = '';
+import LaTeXCompiler from '../../LaTeXCompiler';
 
-  visit(node, 'crossReferenceLabel', (crNode: any) => {
-    node.label += this.convert(crNode);
+export default function heading(this: LaTeXCompiler, node: MDAST.Heading) {
+  let label = '';
+  visit(node, 'crossReferenceLabel', (crNode: MDAST.CrossReferenceLabel) => {
+    label += this.convert(crNode);
+    Object.assign(crNode, { type: 'ignore' });
+    return true;
   });
 
-  node.value = this.all(node).join('');
-
-  return node;
+  return defaultsDeep(
+    {
+      label,
+      value: this.all(node).join(''),
+    },
+    node
+  ) as UNIST.Node;
 }

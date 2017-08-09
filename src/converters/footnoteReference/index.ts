@@ -1,12 +1,13 @@
+import { MDAST } from 'mdast';
 import LaTeXCompiler from '../../LaTeXCompiler';
 
-export default function footnote(
+export default function footnoteReference(
   this: LaTeXCompiler,
-  node: any,
+  node: MDAST.FootnoteReference
 ) {
   const footnotes = this.footnotes;
-  const identifiers: any[] = footnotes.map((f) => f.identifier);
+  const identifiers = footnotes.map(f => f.identifier);
 
-  node.identifier = identifiers.indexOf(`${node.identifier}`) + 1;
+  node.identifier = `${identifiers.indexOf(`${node.identifier}`) + 1}`;
   return node;
 }

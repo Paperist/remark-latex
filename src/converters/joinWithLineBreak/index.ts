@@ -1,9 +1,17 @@
+import { UNIST } from 'unist';
+import { defaultsDeep } from 'lodash';
+
 import LaTeXCompiler from '../../LaTeXCompiler';
 
-export default function blockquote(
+export default function joinWithLineBreak(
   this: LaTeXCompiler,
-  node: any,
+  node: UNIST.Parent
 ) {
-  node.value = this.all(node).join('\n');
-  return node;
+  const value = this.all(node).join('\n');
+  return defaultsDeep(
+    {
+      value,
+    },
+    node
+  ) as UNIST.Node;
 }
