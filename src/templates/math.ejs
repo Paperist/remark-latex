@@ -2,12 +2,12 @@
 <% if (label) {
     -%>\begin{equation}<%
 } else {
-    -%>\begin{displaymath}<%
+    -%>\begin{equation*}<%
 } %>
-<%= mathjax %>
+<%= math %>
 <% if (label) {
     -%><%= label %>\end{equation}<%
 } else {
-    -%>\end{displaymath}<%
+    -%>\end{equation*}<%
 } -%>
 <%# Line Break %>
