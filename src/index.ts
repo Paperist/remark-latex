@@ -6,6 +6,7 @@ import LaTeXPlugin from './attacher';
 
 export const settings = {
   footnotes: true,
+  pedantic: true,
 };
 
 export const plugins: any = [
