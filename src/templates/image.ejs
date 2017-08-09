@@ -1,8 +1,7 @@
 \begin{figure}[tb]
-\begin{center}
+\centering
 \includegraphics[<%= config %>]{<%= url %>}
 <% if (caption) { -%>
 \caption{<%= caption.replace(/\n/g, '\\protect\\\\%\n') %>}<%= label %>
 <% } -%>
-\end{center}
 \end{figure}
