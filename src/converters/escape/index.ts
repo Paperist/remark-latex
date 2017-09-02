@@ -11,11 +11,17 @@ export default function escape(node: UNIST.Text) {
 }
 
 function escapeLaTeX(text: string) {
-  const escapedText = text
-    .replace(/[\{\}#\$%&_]/g, '\\$&')
-    .replace(/[|]/g, '\\verb+$&+')
-    .replace(/[<>^~]/g, '\\verb|$&|')
-    .replace(/\\\\/g, '\\verb|\\|');
+  const escapedText = text.replace(/\\\\|[\{\}#\$%&_]|[|]|[<>^~]/g, str => {
+    if (str === '\\\\') {
+      return '\\textbackslash{}';
+    } else if (str.match(/[\{\}#\$%&_]/)) {
+      return `\\${str}`;
+    } else if (str.match(/[|]/)) {
+      return '\\verb+|+';
+    } else {
+      return `\\verb|${str}|`;
+    }
+  });
   return escapedText;
 }
 
