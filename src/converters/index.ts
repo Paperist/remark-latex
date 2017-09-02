@@ -15,6 +15,7 @@ import inlineCode from './inlineCode';
 import crossReference from './crossReference';
 import footnoteReference from './footnoteReference';
 import math from './math';
+import link from './link';
 
 const raw = (node: UNIST.Node) => node;
 
@@ -37,6 +38,7 @@ export default {
   crossReference,
   footnoteReference,
   math,
+  link,
   yaml: ignore,
   html: ignore,
   definition: ignore,
@@ -47,7 +49,6 @@ export default {
   emphasis: join,
   tableCell: join,
   paragraph: join,
-  link: join,
   root: joinWithLineBreak,
   blockquote: joinWithLineBreak,
   list: joinWithLineBreak,
