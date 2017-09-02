@@ -2,7 +2,7 @@
   "name": "@paperist/remark-latex",
   "description": "wooorm/remark plugin for latex",
   "license": "MIT",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "main": "lib/index.js",
   "files": [
     "lib"
