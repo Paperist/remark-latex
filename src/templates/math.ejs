@@ -2,12 +2,12 @@
 <% if (label) {
     -%>\begin{equation}<%
 } else {
-    -%>\begin{equation*}<%
+    -%>\[<%
 } %>
 <%= math.trim() %>
 <% if (label) {
     -%><%= label %>\end{equation}<%
 } else {
-    -%>\end{equation*}<%
+    -%>\]<%
 } -%>
 <%# Line Break %>
