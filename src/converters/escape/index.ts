@@ -16,10 +16,8 @@ function escapeLaTeX(text: string) {
       return '\\textbackslash{}';
     } else if (str.match(/[\{\}#\$%&_]/)) {
       return `\\${str}`;
-    } else if (str.match(/[|]/)) {
-      return '\\verb+|+';
     } else {
-      return `\\verb|${str}|`;
+      return `\\symbol{\`\\${str}}`;
     }
   });
   return escapedText;

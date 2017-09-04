@@ -10,10 +10,8 @@ export default function inlineCode(node: MDAST.InlineCode) {
         return '\\textbackslash{}';
       } else if (str.match(/[\{\}#\$%&_]/)) {
         return `\\${str}`;
-      } else if (str.match(/[|]/)) {
-        return '\\verb+|+';
       } else {
-        return `\\verb|${str}|`;
+        return `\\symbol{\`\\${str}}`;
       }
     }
   );
