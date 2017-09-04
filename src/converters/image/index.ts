@@ -25,15 +25,23 @@ export default function image(
     Object.assign(crNode, { type: 'ignore' });
   }
 
-  const configStr = qs.stringify(options, ',', '=', {
-    encodeURIComponent: (str: string) => str.replace(/,/g, '\\,'),
-  });
-
   return defaultsDeep(
     {
       label,
       caption: caption.trim(),
-      config: configStr,
+      config: options,
+      utils: {
+        parse(str: string) {
+          return qs.parse(str, ',', '=', {
+            decodeURIComponent: (str: string) => str.replace(/\\,/g, ','),
+          });
+        },
+        stringify(opt: any): string {
+          return qs.stringify(opt, ',', '=', {
+            encodeURIComponent: (str: string) => str.replace(/,/g, '\\,'),
+          });
+        },
+      },
     },
     node
   ) as UNIST.Node;
