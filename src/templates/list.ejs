@@ -1,4 +1,4 @@
-\begin{<%= ordered ? 'enumerate' : 'itemize' %>}
-\setcounter{enumi}{<%= start || 1 %>}
+\begin{<%= ordered ? 'enumerate' : 'itemize' -%>}
+<% if (ordered) { %>[start=<%= start || 1 %>]<% } %>
 <%= value %>
 \end{<%= ordered ? 'enumerate' : 'itemize' %>}
